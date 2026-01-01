@@ -15,7 +15,7 @@ from preprocess import preprocess_data
 
 
 def evaluate_model():
-    # Get data
+    # Load data
     X_train, X_test, y_train, y_test = preprocess_data()
 
     # Train model
@@ -25,7 +25,7 @@ def evaluate_model():
     y_train_pred = model.predict(X_train)
     y_test_pred = model.predict(X_test)
 
-    
+    # ===== Evaluation Metrics =====
     train_accuracy = accuracy_score(y_train, y_train_pred)
     test_accuracy = accuracy_score(y_test, y_test_pred)
 
@@ -33,7 +33,8 @@ def evaluate_model():
     recall = recall_score(y_test, y_test_pred, average="weighted")
     f1 = f1_score(y_test, y_test_pred, average="weighted")
 
-    print("Model Evaluation Metrics:")
+    # Print results
+    print("===== MODEL EVALUATION =====")
     print(f"Train Accuracy : {train_accuracy:.4f}")
     print(f"Test Accuracy  : {test_accuracy:.4f}")
     print(f"Precision      : {precision:.4f}")
@@ -41,6 +42,15 @@ def evaluate_model():
     print(f"F1 Score       : {f1:.4f}")
 
     
+    with open("results/metrics.txt", "w") as f:
+        f.write("KNN Model Evaluation Results\n")
+        f.write(f"Train Accuracy : {train_accuracy:.4f}\n")
+        f.write(f"Test Accuracy  : {test_accuracy:.4f}\n")
+        f.write(f"Precision      : {precision:.4f}\n")
+        f.write(f"Recall         : {recall:.4f}\n")
+        f.write(f"F1 Score       : {f1:.4f}\n")
+
+   
     cm = confusion_matrix(y_test, y_test_pred)
 
     plt.figure(figsize=(6, 4))
@@ -48,6 +58,9 @@ def evaluate_model():
     plt.xlabel("Predicted Label")
     plt.ylabel("True Label")
     plt.title("Confusion Matrix")
+
+    # Save plot
+    plt.savefig("results/confusion_matrix.png")
     plt.show()
 
 

@@ -1,0 +1,6 @@
+KNN Model Evaluation Results
+Train Accuracy : 0.9318
+Test Accuracy  : 0.9091
+Precision      : 0.9083
+Recall         : 0.9091
+F1 Score       : 0.9082
